@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Financial Modeling — Argo Insights</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #F7F6F2;
+      --surface:     #FFFFFF;
+      --ink:         #092a54;
+      --mid:         #024c66;
+      --soft:        #3a7a8a;
+      --pale:        #b8d8de;
+      --lighter:     #daf0f3;
+      --accent:      #039eac;
+      --accent-dark: #027d89;
+      --radius: 14px;
+      --gap:    1.5rem;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2.5rem;
+      border-bottom: 1px solid var(--pale);
+      background: rgba(247,246,242,0.92);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+    .logo img { height: 52px; width: auto; }
+    .logo-text { display: flex; flex-direction: column; line-height: 1.2; }
+    .logo-main {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.15rem;
+      color: var(--ink);
+      letter-spacing: 0.04em;
+    }
+    .logo-sub {
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mid);
+      font-weight: 400;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    nav a {
+      color: var(--mid);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.15s;
+    }
+    nav a:hover { color: var(--ink); }
+    .nav-cta {
+      background: var(--accent) !important;
+      color: #fff !important;
+      padding: 0.45rem 1.2rem;
+      border-radius: 6px;
+      font-weight: 500 !important;
+      font-size: 0.85rem !important;
+      transition: background 0.15s !important;
+    }
+    .nav-cta:hover { background: var(--accent-dark) !important; }
+
+    /* ── BREADCRUMB ── */
+    .breadcrumb {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      color: var(--soft);
+    }
+    .breadcrumb a {
+      color: var(--soft);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb-sep { color: var(--pale); }
+    .breadcrumb-current { color: var(--ink); font-weight: 500; }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 4rem 2rem 3.5rem;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 1.5rem;
+    }
+    .hero-eyebrow::before,
+    .hero-eyebrow::after {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--pale);
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 1.25rem;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero p {
+      color: var(--soft);
+      font-size: 1.05rem;
+      max-width: 540px;
+      margin: 0 auto 2.25rem;
+      font-weight: 300;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      padding: 0.7rem 1.6rem;
+      border-radius: 7px;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: background 0.15s;
+    }
+    .btn-primary:hover { background: var(--accent-dark); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--mid);
+      padding: 0.7rem 1.6rem;
+      border-radius: 7px;
+      text-decoration: none;
+      font-size: 0.88rem;
+      border: 1px solid var(--pale);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── DIVIDER ── */
+    .divider {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      border-top: 1px solid var(--pale);
+    }
+
+    /* ── SHARED SECTION ── */
+    .section {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--pale);
+    }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--soft);
+    }
+    .section-count {
+      font-size: 0.72rem;
+      color: var(--pale);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── WHAT WE DO — 2-col prose + aside ── */
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    .intro-prose h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.6rem;
+      line-height: 1.2;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+    .intro-prose h2 em { font-style: italic; color: var(--accent); }
+    .intro-prose p {
+      color: var(--soft);
+      font-size: 0.95rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+      line-height: 1.7;
+    }
+    .intro-aside {
+      background: var(--surface);
+      border: 1px solid var(--pale);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+    }
+    .intro-aside h3 {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--soft);
+      margin-bottom: 1.25rem;
+    }
+    .check-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .check-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.9rem;
+      color: var(--ink);
+      line-height: 1.45;
+    }
+    .check-list li::before {
+      content: '';
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      margin-top: 1px;
+      border-radius: 50%;
+      background: var(--lighter);
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 9.5l3 3 7-7' stroke='%23039eac' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    }
+
+    /* ── SERVICE CARDS GRID ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: var(--gap);
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--pale);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.5rem 1.5rem;
+      text-decoration: none;
+      color: var(--ink);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(3,158,172,0.13);
+    }
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--lighter);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-icon svg { width: 26px; height: 26px; }
+    .card-body { display: flex; flex-direction: column; gap: 0.35rem; }
+    .card-name {
+      font-size: 0.98rem;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+    .card-tagline {
+      font-size: 0.8rem;
+      color: var(--soft);
+      line-height: 1.45;
+    }
+
+    /* ── PROCESS STEPS ── */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: var(--gap);
+    }
+    .step {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .step-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.4rem;
+      color: var(--accent);
+      line-height: 1;
+      opacity: 0.35;
+    }
+    .step-title {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .step-desc {
+      font-size: 0.82rem;
+      color: var(--soft);
+      font-weight: 300;
+      line-height: 1.55;
+    }
+
+    /* ── CTA STRIP ── */
+    .cta-strip {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+    }
+    .cta-box {
+      background: var(--ink);
+      border-radius: var(--radius);
+      padding: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .cta-box-text h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.6rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+    .cta-box-text h2 em { font-style: italic; color: var(--accent); }
+    .cta-box-text p {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+      font-weight: 300;
+      max-width: 420px;
+    }
+    .btn-cta {
+      background: var(--accent);
+      color: #fff;
+      padding: 0.8rem 2rem;
+      border-radius: 7px;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .btn-cta:hover { background: var(--accent-dark); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--pale);
+      padding: 2rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    footer p { font-size: 0.8rem; color: var(--soft); }
+    footer a { color: var(--soft); text-decoration: none; font-size: 0.8rem; transition: color 0.15s; }
+    footer a:hover { color: var(--accent); }
+    .footer-links { display: flex; gap: 1.5rem; }
+
+    @media (max-width: 700px) {
+      nav ul { display: none; }
+      .intro-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .hero { padding: 3rem 1.25rem 2.5rem; }
+      .section { padding: 1.5rem 1.25rem 3rem; }
+      .cta-strip { padding: 0 1.25rem 4rem; }
+      .cta-box { padding: 2rem 1.5rem; flex-direction: column; align-items: flex-start; }
+      footer { flex-direction: column; align-items: flex-start; padding: 1.5rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <a href="index.html" class="logo">
+      <img src="logo.png" alt="Argo Insights logo" />
+      <span class="logo-text">
+        <span class="logo-main">Argo Insights</span>
+        <span class="logo-sub">Financial Consulting</span>
+      </span>
+    </a>
+    <ul>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#contact" class="nav-cta">Get in touch</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── BREADCRUMB ── -->
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="index.html#services">Services</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Financial Modeling</span>
+  </div>
+
+  <!-- ── HERO ── -->
+  <header class="hero">
+    <p class="hero-eyebrow">Financial Modeling</p>
+    <h1>A clear picture of where your business is <em>going.</em></h1>
+    <p>We build robust, tailored financial models that turn your assumptions into actionable plans — so you can raise funding, plan growth, and make decisions with confidence.</p>
+    <div class="hero-actions">
+      <a href="index.html#contact" class="btn-primary">Book a free call</a>
+      <a href="index.html#services" class="btn-ghost">All services</a>
+    </div>
+  </header>
+
+  <div class="divider"></div>
+
+  <!-- ── WHAT WE DO ── -->
+  <div class="section">
+    <div class="section-header">
+      <p class="section-label">What we do</p>
+    </div>
+    <div class="intro-grid">
+      <div class="intro-prose">
+        <h2>Models built for <em>real decisions</em></h2>
+        <p>Most businesses start with a spreadsheet thrown together in a hurry. It works until it doesn't — until an investor asks a question you can't answer, or a hiring decision relies on cash flow projections you're no longer sure you trust.</p>
+        <p>We build financial models that are clear, flexible, and built around how your business actually works. Whether you need a three-year forecast for a fundraise, a rolling budget you can update monthly, or a scenario tool to stress-test a big decision — we'll build it with you.</p>
+        <p>We also make sure you can use it. Every model we deliver comes with a walkthrough so you're never dependent on us to answer a basic question.</p>
+      </div>
+      <div class="intro-aside">
+        <h3>What's typically included</h3>
+        <ul class="check-list">
+          <li>3–5 year revenue and cost forecasts</li>
+          <li>Monthly cash flow and runway projections</li>
+          <li>Scenario modelling (base, upside, downside)</li>
+          <li>Headcount and hiring plan integration</li>
+          <li>Unit economics — CAC, LTV, payback period</li>
+          <li>Investor-ready P&amp;L, balance sheet &amp; cash flow</li>
+          <li>KPI dashboard with key drivers clearly labelled</li>
+          <li>Sensitivity analysis on your key assumptions</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── WHO IT'S FOR ── -->
+  <div class="section">
+    <div class="section-header">
+      <p class="section-label">Who it's for</p>
+      <p class="section-count">04 types</p>
+    </div>
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13 3L3 8v5c0 5 4.5 9.5 10 11 5.5-1.5 10-6 10-11V8L13 3z" stroke="#024c66" stroke-width="1.7" stroke-linejoin="round"/>
+            <path d="M9 13l3 3 5-5" stroke="#039eac" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <span class="card-name">Founders raising investment</span>
+          <span class="card-tagline">A model that stands up to investor scrutiny — with clear assumptions, credible projections, and the flexibility to answer follow-up questions in the room.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="6" width="20" height="15" rx="2" stroke="#024c66" stroke-width="1.7"/>
+            <path d="M3 10h20" stroke="#039eac" stroke-width="1.5"/>
+            <path d="M8 14h4M8 17h6" stroke="#3a7a8a" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <span class="card-name">Growing businesses planning ahead</span>
+          <span class="card-tagline">Moving from reactive to proactive — a proper budget and rolling forecast so you can plan hiring, investment, and expansion without flying blind.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="10" cy="9" r="4" stroke="#024c66" stroke-width="1.7"/>
+            <circle cx="18" cy="9" r="4" stroke="#039eac" stroke-width="1.7"/>
+            <path d="M3 21c0-3.3 3.1-6 7-6s7 2.7 7 6" stroke="#024c66" stroke-width="1.7" stroke-linecap="round"/>
+            <path d="M18 15c2.2.5 4 2.6 4 6" stroke="#039eac" stroke-width="1.7" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <span class="card-name">Businesses approaching an exit or sale</span>
+          <span class="card-tagline">A clean, well-documented model that demonstrates value to acquirers and supports a credible narrative through due diligence.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 20 L5 10 L10 14 L15 7 L21 11" stroke="#024c66" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="21" cy="11" r="2" fill="#039eac"/>
+            <line x1="3" y1="22" x2="23" y2="22" stroke="#b8d8de" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <span class="card-name">Teams evaluating a specific decision</span>
+          <span class="card-tagline">Launching a new product, entering a new market, or making a large hire? We'll model the scenarios so you can weigh the numbers before you commit.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── HOW WE WORK ── -->
+  <div class="section">
+    <div class="section-header">
+      <p class="section-label">How we work</p>
+      <p class="section-count">04 steps</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">01</span>
+        <span class="step-title">Discovery call</span>
+        <p class="step-desc">We start by understanding your business, your goal for the model, and the decisions it needs to support. No jargon, no templates pushed at you before we've listened.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">02</span>
+        <span class="step-title">Build &amp; iterate</span>
+        <p class="step-desc">We build the model in close collaboration — sharing drafts early, incorporating your knowledge of the business, and refining until every number reflects how you actually operate.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">03</span>
+        <span class="step-title">Review &amp; walkthrough</span>
+        <p class="step-desc">We walk you through the finished model in detail — explaining the logic, the assumptions, and the levers you can pull. You leave knowing how to use it, not just what it says.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">04</span>
+        <span class="step-title">Ongoing support</span>
+        <p class="step-desc">Business changes fast. We're available for updates, refreshes, and new scenarios as your situation evolves — no need to start from scratch every time something shifts.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CTA ── -->
+  <div class="cta-strip">
+    <div class="cta-box">
+      <div class="cta-box-text">
+        <h2>Ready to get started? <em>Let's talk.</em></h2>
+        <p>A 30-minute call is all it takes to understand your situation and explain exactly how we can help. No commitment, no sales pitch.</p>
+      </div>
+      <a href="index.html#contact" class="btn-cta">Book a free call →</a>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <p>© 2026 Argo Insights Company. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="index.html#about">About</a>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </footer>
+
+</body>
+</html>

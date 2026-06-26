@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Argo Insights — Financial Consulting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Original site background — warm off-white */
+      --bg:        #F7F6F2;
+      --surface:   #FFFFFF;
+
+      /* Dark navy from "ARGO" text in logo */
+      --ink:       #092a54;
+      /* Mid teal-navy from logo body */
+      --mid:       #024c66;
+      /* Secondary text — muted mid teal */
+      --soft:      #3a7a8a;
+      /* Pale teal-grey for borders */
+      --pale:      #b8d8de;
+      /* Very light teal tint for card icon bg */
+      --lighter:   #daf0f3;
+
+      /* Primary accent — bright teal from arc & chart highlight */
+      --accent:      #039eac;
+      --accent-dark: #027d89;
+
+      --radius: 14px;
+      --gap:    1.5rem;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2.5rem;
+      border-bottom: 1px solid var(--pale);
+      background: rgba(247,246,242,0.92);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+    .logo img {
+      height: 52px;
+      width: auto;
+    }
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+    .logo-main {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.15rem;
+      color: var(--ink);
+      letter-spacing: 0.04em;
+    }
+    .logo-sub {
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mid);
+      font-weight: 400;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    nav a {
+      color: var(--mid);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.15s;
+    }
+    nav a:hover { color: var(--ink); }
+    .nav-cta {
+      background: var(--accent) !important;
+      color: #fff !important;
+      padding: 0.45rem 1.2rem;
+      border-radius: 6px;
+      font-weight: 500 !important;
+      font-size: 0.85rem !important;
+      transition: background 0.15s !important;
+    }
+    .nav-cta:hover { background: var(--accent-dark) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 6rem 2rem 4rem;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 1.5rem;
+    }
+    .hero-eyebrow::before,
+    .hero-eyebrow::after {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--pale);
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 1.4rem;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero p {
+      color: var(--soft);
+      font-size: 1.05rem;
+      max-width: 520px;
+      margin: 0 auto 2.25rem;
+      font-weight: 300;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      padding: 0.7rem 1.6rem;
+      border-radius: 7px;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: background 0.15s;
+    }
+    .btn-primary:hover { background: var(--accent-dark); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--mid);
+      padding: 0.7rem 1.6rem;
+      border-radius: 7px;
+      text-decoration: none;
+      font-size: 0.88rem;
+      border: 1px solid var(--pale);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── DIVIDER ── */
+    .divider {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      border-top: 1px solid var(--pale);
+    }
+
+    /* ── SECTION ── */
+    .section {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 5rem;
+    }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--pale);
+    }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--soft);
+    }
+    .section-count {
+      font-size: 0.72rem;
+      color: var(--pale);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── CARD GRID ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: var(--gap);
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--pale);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.5rem 1.5rem;
+      text-decoration: none;
+      color: var(--ink);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(3, 158, 172, 0.13);
+    }
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--lighter);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-icon svg { width: 26px; height: 26px; }
+    .card-body { display: flex; flex-direction: column; gap: 0.35rem; }
+    .card-name {
+      font-size: 0.98rem;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+    .card-tagline {
+      font-size: 0.8rem;
+      color: var(--soft);
+      line-height: 1.45;
+    }
+    .card-arrow {
+      margin-top: auto;
+      font-size: 0.75rem;
+      color: var(--pale);
+      letter-spacing: 0.04em;
+      transition: color 0.15s;
+    }
+    .card:hover .card-arrow { color: var(--accent); }
+
+    /* ── TRUST BAR ── */
+    .trust {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+      display: flex;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .trust-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .trust-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .trust-label {
+      font-size: 0.78rem;
+      color: var(--soft);
+      font-weight: 300;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--pale);
+      padding: 2rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    footer p { font-size: 0.8rem; color: var(--soft); }
+    footer a { color: var(--soft); text-decoration: none; font-size: 0.8rem; transition: color 0.15s; }
+    footer a:hover { color: var(--accent); }
+    .footer-links { display: flex; gap: 1.5rem; }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .hero { padding: 3.5rem 1.25rem 2.5rem; }
+      .section { padding: 1.5rem 1.25rem 3rem; }
+      .trust { padding: 0 1.25rem 3rem; gap: 1.5rem; }
+      footer { flex-direction: column; align-items: flex-start; padding: 1.5rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="logo">
+      <!-- Save your logo as logo.png in the same folder as this file -->
+      <img src="logo.png" alt="Argo Insights logo" />
+      <span class="logo-text">
+        <span class="logo-main">Argo Insights</span>
+        <span class="logo-sub">Financial Consulting</span>
+      </span>
+    </a>
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact" class="nav-cta">Get in touch</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <p class="hero-eyebrow">Financial Consulting</p>
+    <h1>Insight that drives <em>better</em> decisions.</h1>
+    <p>We help businesses understand their numbers, value their assets, and turn data into a competitive advantage.</p>
+    <div class="hero-actions">
+      <a href="#services" class="btn-primary">Our services</a>
+      <a href="#contact" class="btn-ghost">Book a call</a>
+    </div>
+  </header>
+
+  <div class="divider"></div>
+
+  <main>
+    <div class="section" id="services">
+      <div class="section-header">
+        <p class="section-label">Services</p>
+        <p class="section-count">03 areas</p>
+      </div>
+      <div class="grid">
+
+        <!-- Financial Modeling -->
+        <a href="financial-modeling.html" class="card">
+          <div class="card-icon">
+            <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="14" width="4" height="10" rx="1" fill="#3a7a8a"/>
+              <rect x="8" y="9" width="4" height="15" rx="1" fill="#024c66"/>
+              <rect x="14" y="5" width="4" height="19" rx="1" fill="#024c66" opacity="0.55"/>
+              <rect x="20" y="2" width="4" height="22" rx="1" fill="#039eac"/>
+            </svg>
+          </div>
+          <div class="card-body">
+            <span class="card-name">Financial Modeling</span>
+            <span class="card-tagline">Budgets &amp; forecasts that give you clarity on where your business is heading.</span>
+          </div>
+          <span class="card-arrow">Learn more →</span>
+        </a>
+
+        <!-- Valuations -->
+        <a href="#" class="card">
+          <div class="card-icon">
+            <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="13" cy="13" r="10" stroke="#024c66" stroke-width="1.8"/>
+              <path d="M13 7v2.5M13 16.5V19M9.5 10.5c0-1.1.9-2 2.2-2h2.2a2 2 0 0 1 .6 3.9l-2.5.7a2 2 0 0 0 .5 3.9h2.5c1.2 0 2-.9 2-2" stroke="#039eac" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="card-body">
+            <span class="card-name">Company &amp; Share Valuations</span>
+            <span class="card-tagline">Independent valuations of companies and share options for transactions, planning, and compliance.</span>
+          </div>
+          <span class="card-arrow">Learn more →</span>
+        </a>
+
+        <!-- Data Analytics -->
+        <a href="#" class="card">
+          <div class="card-icon">
+            <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polyline points="2,20 7,13 11,16 17,7 24,10" stroke="#024c66" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="17" cy="7" r="2.2" fill="#039eac"/>
+              <line x1="2" y1="23" x2="24" y2="23" stroke="#b8d8de" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="card-body">
+            <span class="card-name">Data Analytics</span>
+            <span class="card-tagline">Transform raw data into actionable intelligence — dashboards, reporting, and strategic insight.</span>
+          </div>
+          <span class="card-arrow">Learn more →</span>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- Trust bar -->
+    <div class="trust">
+      <div class="trust-item">
+        <span class="trust-num">50+</span>
+        <span class="trust-label">clients advised</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-num">£10m</span>
+        <span class="trust-label">in modelled transactions</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-num">12+</span>
+        <span class="trust-label">years of experience</span>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 Argo Insights Company. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="#">About</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </footer>
+
+</body>
+</html>

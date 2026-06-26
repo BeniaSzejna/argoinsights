@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Argo Insights</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <!-- Calendly popup widget assets -->
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
+  <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #F7F6F2;
+      --surface:     #FFFFFF;
+      --ink:         #092a54;
+      --mid:         #024c66;
+      --soft:        #3a7a8a;
+      --pale:        #b8d8de;
+      --lighter:     #daf0f3;
+      --accent:      #039eac;
+      --accent-dark: #027d89;
+      --radius: 14px;
+      --gap:    1.5rem;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2.5rem;
+      border-bottom: 1px solid var(--pale);
+      background: rgba(247,246,242,0.92);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+    .logo img { height: 52px; width: auto; }
+    .logo-text { display: flex; flex-direction: column; line-height: 1.2; }
+    .logo-main {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.15rem;
+      color: var(--ink);
+      letter-spacing: 0.04em;
+    }
+    .logo-sub {
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mid);
+      font-weight: 400;
+    }
+    nav ul { list-style: none; display: flex; gap: 2rem; align-items: center; }
+    nav a {
+      color: var(--mid);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.15s;
+    }
+    nav a:hover { color: var(--ink); }
+    .nav-cta {
+      background: var(--accent) !important;
+      color: #fff !important;
+      padding: 0.45rem 1.2rem;
+      border-radius: 6px;
+      font-weight: 500 !important;
+      font-size: 0.85rem !important;
+      transition: background 0.15s !important;
+    }
+    .nav-cta:hover { background: var(--accent-dark) !important; }
+
+    /* ── BREADCRUMB ── */
+    .breadcrumb {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      color: var(--soft);
+    }
+    .breadcrumb a { color: var(--soft); text-decoration: none; transition: color 0.15s; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb-sep { color: var(--pale); }
+    .breadcrumb-current { color: var(--ink); font-weight: 500; }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 4rem 2rem 3.5rem;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 1.5rem;
+    }
+    .hero-eyebrow::before,
+    .hero-eyebrow::after {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--pale);
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 1.25rem;
+    }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero p {
+      color: var(--soft);
+      font-size: 1.05rem;
+      max-width: 540px;
+      margin: 0 auto;
+      font-weight: 300;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      border-top: 1px solid var(--pale);
+    }
+
+    /* ── SECTION ── */
+    .section {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--pale);
+    }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--soft);
+    }
+
+    /* ── TWO-COLUMN: FORM + ASIDE ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    /* Form (left) */
+    .form-intro h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.6rem;
+      line-height: 1.2;
+      color: var(--ink);
+      margin-bottom: 0.75rem;
+    }
+    .form-intro h2 em { font-style: italic; color: var(--accent); }
+    .form-intro p {
+      color: var(--soft);
+      font-size: 0.95rem;
+      font-weight: 300;
+      margin-bottom: 1.75rem;
+      line-height: 1.7;
+    }
+    .field { margin-bottom: 1.1rem; }
+    .field label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--soft);
+      margin-bottom: 0.45rem;
+    }
+    .field input,
+    .field textarea {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--pale);
+      border-radius: 8px;
+      padding: 0.7rem 0.85rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      color: var(--ink);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .field input::placeholder,
+    .field textarea::placeholder { color: #a9bcc2; }
+    .field input:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(3,158,172,0.12);
+    }
+    .field textarea { resize: vertical; min-height: 120px; }
+    .btn-submit {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 0.8rem 1.8rem;
+      border-radius: 7px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-submit:hover { background: var(--accent-dark); }
+    .btn-submit:disabled { opacity: 0.6; cursor: default; }
+    .form-note {
+      font-size: 0.78rem;
+      color: var(--soft);
+      font-weight: 300;
+      margin-top: 0.9rem;
+    }
+    .form-status {
+      margin-top: 1rem;
+      font-size: 0.88rem;
+      border-radius: 8px;
+      padding: 0.75rem 0.9rem;
+      display: none;
+    }
+    .form-status.ok {
+      display: block;
+      background: var(--lighter);
+      color: var(--mid);
+      border: 1px solid var(--pale);
+    }
+    .form-status.err {
+      display: block;
+      background: #fdecec;
+      color: #9a3434;
+      border: 1px solid #f3c9c9;
+    }
+
+    /* Aside (right) */
+    .aside-card {
+      background: var(--surface);
+      border: 1px solid var(--pale);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      margin-bottom: var(--gap);
+    }
+    .aside-card.dark { background: var(--ink); border-color: var(--ink); }
+    .aside-card h3 {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--soft);
+      margin-bottom: 1rem;
+    }
+    .aside-card.dark h3 { color: var(--pale); }
+    .aside-card .lead {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      line-height: 1.25;
+      color: #fff;
+      margin-bottom: 0.6rem;
+    }
+    .aside-card .lead em { font-style: italic; color: var(--accent); }
+    .aside-card .sub {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.88rem;
+      font-weight: 300;
+      margin-bottom: 1.4rem;
+    }
+    .btn-cta {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 0.75rem 1.6rem;
+      border-radius: 7px;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: background 0.15s;
+    }
+    .btn-cta:hover { background: var(--accent-dark); }
+
+    .contact-line {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 1.1rem;
+    }
+    .contact-line:last-child { margin-bottom: 0; }
+    .contact-line .ci {
+      width: 34px; height: 34px;
+      flex-shrink: 0;
+      border-radius: 8px;
+      background: var(--lighter);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .contact-line .ci svg { width: 17px; height: 17px; }
+    .contact-line .ct-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--soft);
+      margin-bottom: 0.1rem;
+    }
+    .contact-line .ct-value { font-size: 0.92rem; color: var(--ink); }
+    .contact-line a.ct-value { text-decoration: none; transition: color 0.15s; }
+    .contact-line a.ct-value:hover { color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--pale);
+      padding: 2rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    footer p { font-size: 0.8rem; color: var(--soft); }
+    footer a { color: var(--soft); text-decoration: none; font-size: 0.8rem; transition: color 0.15s; }
+    footer a:hover { color: var(--accent); }
+    .footer-links { display: flex; gap: 1.5rem; }
+
+    @media (max-width: 700px) {
+      nav ul { display: none; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .hero { padding: 3rem 1.25rem 2.5rem; }
+      .section { padding: 1.5rem 1.25rem 3rem; }
+      footer { flex-direction: column; align-items: flex-start; padding: 1.5rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <a href="index.html" class="logo">
+      <img src="logo.png" alt="Argo Insights logo" />
+      <span class="logo-text">
+        <span class="logo-main">Argo Insights</span>
+        <span class="logo-sub">Financial Consulting</span>
+      </span>
+    </a>
+    <ul>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="contact.html" class="nav-cta">Get in touch</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── BREADCRUMB ── -->
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Contact</span>
+  </div>
+
+  <!-- ── HERO ── -->
+  <header class="hero">
+    <p class="hero-eyebrow">Contact</p>
+    <h1>Let's <em>talk.</em></h1>
+    <p>Whether you're ready to book a call or just want to send a quick message first — pick whichever suits you. We usually reply within one working day.</p>
+  </header>
+
+  <div class="divider"></div>
+
+  <!-- ── FORM + ASIDE ── -->
+  <div class="section">
+    <div class="section-header">
+      <p class="section-label">Get in touch</p>
+    </div>
+
+    <div class="contact-grid">
+
+      <!-- LEFT: message form -->
+      <div id="message" class="form-intro">
+        <h2>Send us a <em>message</em></h2>
+        <p>Tell us a little about your business and what you're looking for. No pressure and no commitment — just the start of a conversation.</p>
+
+        <form id="contactForm">
+          <!-- ▼▼ Replace with your Web3Forms access key (free at https://web3forms.com) ▼▼ -->
+          <input type="hidden" name="access_key" value="YOUR-WEB3FORMS-ACCESS-KEY" />
+          <input type="hidden" name="subject" value="New enquiry from Argo Insights website" />
+          <input type="hidden" name="from_name" value="Argo Insights Website" />
+          <!-- honeypot spam trap -->
+          <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
+
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" type="text" name="name" placeholder="Your full name" required />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" type="email" name="email" placeholder="you@company.com" required />
+          </div>
+          <div class="field">
+            <label for="company">Company <span style="text-transform:none;letter-spacing:0;font-weight:300;">(optional)</span></label>
+            <input id="company" type="text" name="company" placeholder="Company name" />
+          </div>
+          <div class="field">
+            <label for="message-text">How can we help?</label>
+            <textarea id="message-text" name="message" placeholder="A few lines about your business and what you're after…" required></textarea>
+          </div>
+
+          <button type="submit" class="btn-submit" id="submitBtn">Send message</button>
+          <p class="form-note">By sending this you agree we may contact you about your enquiry. We never share your details.</p>
+          <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+
+      <!-- RIGHT: book a call + direct contact -->
+      <div>
+        <div id="schedule" class="aside-card dark">
+          <h3>Prefer to talk?</h3>
+          <p class="lead">Book a free <em>30-minute call</em></p>
+          <p class="sub">Grab a slot that suits you. We'll learn about your situation and explain exactly how we can help — no sales pitch.</p>
+          <!-- ▼▼ Set your Calendly URL in the CALENDLY_URL variable in the script at the bottom ▼▼ -->
+          <a href="#" class="btn-cta" id="bookCallBtn">Book a call →</a>
+        </div>
+
+        <div class="aside-card">
+          <h3>Or reach us directly</h3>
+
+          <div class="contact-line">
+            <span class="ci">
+              <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="2" y="3.5" width="14" height="11" rx="2" stroke="#024c66" stroke-width="1.4"/>
+                <path d="M3 5l6 4 6-4" stroke="#039eac" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span>
+              <span class="ct-label">Email</span><br/>
+              <a class="ct-value" href="mailto:hello@argoinsights.com">hello@argoinsights.com</a>
+            </span>
+          </div>
+
+          <div class="contact-line">
+            <span class="ci">
+              <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 3h3l1.5 4-2 1.5a9 9 0 0 0 4 4l1.5-2 4 1.5v3a1.5 1.5 0 0 1-1.6 1.5A13 13 0 0 1 2.5 4.6 1.5 1.5 0 0 1 4 3z" stroke="#024c66" stroke-width="1.4" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span>
+              <span class="ct-label">Phone</span><br/>
+              <a class="ct-value" href="tel:+44000000000">+44 (0) 000 000 000</a>
+            </span>
+          </div>
+
+          <div class="contact-line">
+            <span class="ci">
+              <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="9" cy="9" r="7" stroke="#024c66" stroke-width="1.4"/>
+                <path d="M9 5v4l2.5 1.5" stroke="#039eac" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span>
+              <span class="ct-label">Response time</span><br/>
+              <span class="ct-value">Within 1 working day</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <p>© 2026 Argo Insights Company. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="index.html#about">About</a>
+      <a href="index.html#services">Services</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    /* ▼▼ Replace with your Calendly link, e.g. 'https://calendly.com/your-name/30min' ▼▼ */
+    const CALENDLY_URL = 'https://calendly.com/YOUR-NAME/30min';
+
+    document.getElementById('bookCallBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      if (CALENDLY_URL.includes('YOUR-NAME')) {
+        alert('Booking isn\u2019t connected yet — add your Calendly link to the CALENDLY_URL variable in contact.html.');
+        return;
+      }
+      if (window.Calendly) {
+        Calendly.initPopupWidget({ url: CALENDLY_URL });
+      } else {
+        window.open(CALENDLY_URL, '_blank', 'noopener');
+      }
+    });
+
+    const form = document.getElementById('contactForm');
+    const statusEl = document.getElementById('formStatus');
+    const btn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      statusEl.className = 'form-status';
+      statusEl.textContent = '';
+
+      const key = form.querySelector('input[name="access_key"]').value;
+      if (!key || key.startsWith('YOUR-')) {
+        statusEl.className = 'form-status err';
+        statusEl.textContent = 'This form isn\u2019t connected yet — add your Web3Forms access key to start receiving messages.';
+        return;
+      }
+
+      btn.disabled = true;
+      const original = btn.textContent;
+      btn.textContent = 'Sending…';
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(form)
+        });
+        const data = await res.json();
+        if (data.success) {
+          statusEl.className = 'form-status ok';
+          statusEl.textContent = 'Thanks — your message has been sent. We\u2019ll be in touch within one working day.';
+          form.reset();
+        } else {
+          throw new Error(data.message || 'Submission failed');
+        }
+      } catch (err) {
+        statusEl.className = 'form-status err';
+        statusEl.textContent = 'Something went wrong sending your message. Please email us directly at hello@argoinsights.com.';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = original;
+      }
+    });
+  </script>
+
+</body>
+</html>
